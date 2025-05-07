@@ -2,7 +2,6 @@ package com.example.safetynet.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +16,6 @@ public class FloodController {
 
     private final PersonFirestionMedicalService personFirestionMedicalService;
 
-    @Autowired
     public FloodController(PersonFirestionMedicalService personFirestionMedicalService) {
         this.personFirestionMedicalService = personFirestionMedicalService;
     }

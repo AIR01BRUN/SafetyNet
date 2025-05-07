@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,6 @@ public class FirestationController {
 
     private PersonFirestionMedicalService personFirestionMedicalService;
 
-    @Autowired
     public FirestationController(FirestationService firestationService,
             PersonFirestionMedicalService personFirestionMedicalService) {
         this.firestationService = firestationService;
@@ -33,9 +32,9 @@ public class FirestationController {
     }
 
     @PostMapping
-    public Firestation addFirestation(@RequestBody Firestation firestation) {
+    public ResponseEntity<String> addFirestation(@RequestBody Firestation firestation) {
         firestationService.addFirestation(firestation);
-        return firestation;
+        return ResponseEntity.ok("firestation  : " + firestation + "added");
     }
 
     @GetMapping
@@ -44,28 +43,34 @@ public class FirestationController {
     }
 
     @PutMapping
-    public Firestation updateFirestation(@RequestBody Firestation firestation) {
-        firestationService.updateFirestation(firestation);
-        return firestation;
+    public ResponseEntity<String> updateFirestation(@RequestBody Firestation firestation) {
+
+        if (firestationService.updateFirestation(firestation)) {
+            return ResponseEntity.ok("Firestation : " + firestation + " updated");
+        } else {
+            return ResponseEntity.status(404).body("Firestation not found");
+        }
 
     }
 
     @DeleteMapping("/byAddress/{address}")
-    public String deletePerson(@PathVariable String address) {
+    public ResponseEntity<String> deletePerson(@PathVariable String address) {
 
         if (firestationService.deleteFirestationByAddress(address)) {
-            return "deleted by address";
+            return ResponseEntity.ok("Firestation: " + address + " deleted");
+        } else {
+            return ResponseEntity.status(404).body("Firestation not found");
         }
-        return "//";
     }
 
     @DeleteMapping("/byStation/{station}")
-    public String deletePerson(@PathVariable int station) {
+    public ResponseEntity<String> deletePerson(@PathVariable int station) {
 
         if (firestationService.deleteFirestationByStation(station)) {
-            return "deleted by address";
+            return ResponseEntity.ok("Firestation: " + station + " deleted");
+        } else {
+            return ResponseEntity.status(404).body("Firestation not found");
         }
-        return "//";
     }
 
 }

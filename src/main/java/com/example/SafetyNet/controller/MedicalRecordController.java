@@ -1,6 +1,6 @@
 package com.example.safetynet.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,32 +18,33 @@ public class MedicalRecordController {
 
     private MedicalRecordService medicalRecordService;
 
-    @Autowired
     public MedicalRecordController(MedicalRecordService medicalRecordService) {
         this.medicalRecordService = medicalRecordService;
     }
 
     @PostMapping
-    public String addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+    public ResponseEntity<String> addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
         medicalRecordService.addMedicalRecord(medicalRecord);
-        return "added";
+        return ResponseEntity.ok("MedicalRecord added");
     }
 
     @PutMapping
-    public String updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+    public ResponseEntity<String> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
         if (medicalRecordService.updateMedicalRecord(medicalRecord)) {
-            return "update";
+            return ResponseEntity.ok("MedicalRecord: " + medicalRecord + " updated");
+        } else {
+            return ResponseEntity.status(404).body("MedicalRecord not found");
         }
-        return "//";
     }
 
     @DeleteMapping("/{firstName}/{lastName}")
-    public String deleteMedicalRecord(@PathVariable String firstName, @PathVariable String lastName) {
+    public ResponseEntity<String> deleteMedicalRecord(@PathVariable String firstName, @PathVariable String lastName) {
 
         if (medicalRecordService.deleteMedicalRecordByName(firstName, lastName)) {
-            return "deleted";
+            return ResponseEntity.ok("MedicalRecord: " + firstName + " " + lastName + " deleted");
+        } else {
+            return ResponseEntity.status(404).body("MedicalRecord not found");
         }
-        return "//";
     }
 
 }

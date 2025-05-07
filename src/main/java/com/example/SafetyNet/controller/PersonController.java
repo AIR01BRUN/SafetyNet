@@ -2,7 +2,7 @@ package com.example.safetynet.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +21,6 @@ public class PersonController {
 
     private PersonService personService;
 
-    @Autowired
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
@@ -32,23 +31,31 @@ public class PersonController {
     }
 
     @PostMapping
-    public String addPerson(@RequestBody Person person) {
+    public ResponseEntity<String> addPerson(@RequestBody Person person) {
         personService.addPerson(person);
-        return "added";
+
+        return ResponseEntity.ok("Person added");
     }
 
     @PutMapping
-    public String updatePerson(@RequestBody Person person) {
+    public ResponseEntity<String> updatePerson(@RequestBody Person person) {
         if (personService.updatePerson(person)) {
-            return "updatePersone";
+            return ResponseEntity.ok("Person updated");
+        } else {
+            return ResponseEntity.status(404).body("Person not found");
         }
-        return "//";
+
     }
 
     @DeleteMapping("/{firstName}/{lastName}")
-    public String deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
-        personService.deletePerson(firstName, lastName);
-        return "deleted";
+    public ResponseEntity<String> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
+
+        if (personService.deletePerson(firstName, lastName)) {
+            return ResponseEntity.ok("Person deleted");
+        } else {
+            return ResponseEntity.status(404).body("Person not found");
+        }
+
     }
 
 }

@@ -15,12 +15,21 @@ import com.example.safetynet.repository.PersonRepositoty;
 @Service
 public class PersonFirestationService {
 
-    private final FirestationRepository firestationRepository;
-    private final PersonRepositoty personRepository;
+    private List<Firestation> listFirestations;
+    private List<Person> listPersons;
 
+    @Autowired
     public PersonFirestationService(FirestationRepository firestationRepository, PersonRepositoty personRepository) {
-        this.firestationRepository = firestationRepository;
-        this.personRepository = personRepository;
+
+        this.listFirestations = firestationRepository.findAll();
+        this.listPersons = personRepository.findAll();
+    }
+
+    public PersonFirestationService(
+            List<Person> listPersons, List<Firestation> listFirestations) {
+
+        this.listFirestations = listFirestations;
+        this.listPersons = listPersons;
     }
 
     /**
@@ -32,12 +41,10 @@ public class PersonFirestationService {
      *         number
      */
     public List<Person> getPersonsByStationNumber(int stationNumber) {
-        List<Person> listPersons = personRepository.findAll();
-        List<Firestation> lisFirestations = firestationRepository.findAll();
 
         List<Person> listPersonsByStationNumber = new ArrayList<>();
         for (Person person : listPersons) {
-            for (Firestation firestation : lisFirestations) {
+            for (Firestation firestation : listFirestations) {
                 if (person.getAddress().equals(firestation.getAddress()) && firestation.getStation() == stationNumber) {
                     listPersonsByStationNumber.add(person);
                 }

@@ -15,7 +15,6 @@ public class ChildAlertController {
 
     private PersonMedicalRecordService personMedicalRecordService;
 
-    @Autowired
     public ChildAlertController(PersonMedicalRecordService personMedicalRecordService) {
         this.personMedicalRecordService = personMedicalRecordService;
     }

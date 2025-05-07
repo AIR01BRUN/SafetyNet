@@ -3,6 +3,7 @@ package com.example.safetynet.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.safetynet.model.Firestation;
 
@@ -14,9 +15,16 @@ public class FirestationService {
     private final FirestationRepository firestationRepository;
     private List<Firestation> listFirestations;
 
+    @Autowired
     public FirestationService(FirestationRepository firestationRepository) {
         this.firestationRepository = firestationRepository;
         this.listFirestations = firestationRepository.findAll();
+    }
+
+    // Test only
+    public FirestationService(FirestationRepository firestationRepository, List<Firestation> list) {
+        this.firestationRepository = firestationRepository;
+        this.listFirestations = list;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.example.safetynet.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.safetynet.model.MedicalRecord;
@@ -14,10 +15,15 @@ public class MedicalRecordService {
     private final MedicalRecordRepository medicalRecordRepository;
     private List<MedicalRecord> listMedicalRecords;
 
+    @Autowired
     public MedicalRecordService(MedicalRecordRepository medicalRecordRepository) {
         this.medicalRecordRepository = medicalRecordRepository;
         this.listMedicalRecords = medicalRecordRepository.findAll();
+    }
 
+    public MedicalRecordService(MedicalRecordRepository medicalRecordRepository, List<MedicalRecord> list) {
+        this.medicalRecordRepository = medicalRecordRepository;
+        this.listMedicalRecords = list;
     }
 
     /**

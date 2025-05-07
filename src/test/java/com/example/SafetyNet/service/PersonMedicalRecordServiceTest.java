@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.example.safetynet.DTO.AllChildByAddressDTO;
@@ -26,7 +25,6 @@ class PersonMedicalRecordServiceTest {
     @Mock
     private UtilsService utilsService;
 
-    @InjectMocks
     private PersonMedicalRecordService personMedicalRecordService;
 
     private List<MedicalRecord> medicalRecords = new ArrayList<MedicalRecord>();
@@ -53,7 +51,9 @@ class PersonMedicalRecordServiceTest {
         medicalRecords.add(medicalRecord03);
         medicalRecords.add(medicalRecord04);
 
+        when(personService.getAllPersons()).thenReturn(persons);
         when(medicalRecordService.getAllMedicalRecord()).thenReturn(medicalRecords);
+        personMedicalRecordService = new PersonMedicalRecordService(personService, medicalRecordService, utilsService);
 
     }
 
@@ -91,10 +91,6 @@ class PersonMedicalRecordServiceTest {
 
     @Test
     void testGetPersonsDTOByLastName() {
-
-        when(personService.getAllPersons()).thenReturn(persons);
-        when(medicalRecordService.getAllMedicalRecord()).thenReturn(medicalRecords);
-        when(utilsService.calculateAge("01/01/2000")).thenReturn(22);
 
         List<PersonsDTO> result = personMedicalRecordService.getPersonsDTOByLastName("A");
 

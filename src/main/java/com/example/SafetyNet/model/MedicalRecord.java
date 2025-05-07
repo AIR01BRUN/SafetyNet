@@ -4,41 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Represents a medical record of an individual.
- * Contains personal information such as first name, last name, birthdate,
- * medications, and allergies.
- * 
- * <p>
- * This class is used to store and retrieve medical information for a person.
- * </p>
- * 
- * <p>
- * Example usage:
- * </p>
- * 
- * <pre>
- * {@code
- * List<String> medications = Arrays.asList("med1", "med2");
- * List<String> allergies = Arrays.asList("allergy1", "allergy2");
- * MedicalRecord record = new MedicalRecord("John", "Doe", "01/01/2000", medications, allergies);
- * }
- * </pre>
- * 
- * <p>
- * The class provides getter and setter methods for each field.
- * </p>
- * 
- * <p>
- * Annotations:
- * </p>
- * <ul>
- * <li>{@link com.fasterxml.jackson.annotation.JsonProperty} - Used to specify
- * the JSON property names for serialization and deserialization.</li>
- * </ul>
- * 
- * @see com.fasterxml.jackson.annotation.JsonProperty
- */
 public class MedicalRecord {
 
     @JsonProperty("firstName")

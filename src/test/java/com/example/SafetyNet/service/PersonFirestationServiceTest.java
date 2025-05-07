@@ -1,29 +1,28 @@
 package com.example.safetynet.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.example.safetynet.model.Firestation;
 import com.example.safetynet.model.Person;
 import com.example.safetynet.repository.FirestationRepository;
+import com.example.safetynet.repository.PersonRepositoty;
 
 class PersonFirestationServiceTest {
 
-    @InjectMocks
     private PersonFirestationService personFirestationService;
 
     @Mock
     private FirestationRepository firestationRepository;
 
     @Mock
-    private PersonService personService;
+    private PersonRepositoty personRepositoty;
 
     private List<Person> persons = new ArrayList<Person>();
     private List<Firestation> firestations = new ArrayList<Firestation>();
@@ -44,8 +43,8 @@ class PersonFirestationServiceTest {
         firestations.add(firestation01);
         firestations.add(firestation02);
 
-        when(personService.getAllPersons()).thenReturn(persons);
-        when(firestationRepository.findAll()).thenReturn(firestations);
+        personFirestationService = new PersonFirestationService(persons, firestations);
+
     }
 
     @Test

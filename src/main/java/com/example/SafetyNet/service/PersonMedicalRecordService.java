@@ -3,7 +3,6 @@ package com.example.safetynet.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.safetynet.DTO.AllChildByAddressDTO;
@@ -17,15 +16,16 @@ public class PersonMedicalRecordService {
 
     private PersonService personService;
 
-    private MedicalRecordService medicalRecordService;
-
     private UtilsService utilsService;
+
+    private MedicalRecordService medicalRecordService;
 
     public PersonMedicalRecordService(PersonService personService, MedicalRecordService medicalRecordService,
             UtilsService utilsService) {
         this.personService = personService;
-        this.medicalRecordService = medicalRecordService;
         this.utilsService = utilsService;
+        this.medicalRecordService = medicalRecordService;
+
     }
 
     /**
@@ -37,10 +37,10 @@ public class PersonMedicalRecordService {
      */
 
     public MedicalRecord getMedicalRecordByPerson(Person person) {
-        List<MedicalRecord> listMedicalRecords = medicalRecordService.getAllMedicalRecord();
+
         MedicalRecord medicalRecordPerson = new MedicalRecord();
 
-        for (MedicalRecord medicalRecord : listMedicalRecords) {
+        for (MedicalRecord medicalRecord : medicalRecordService.getAllMedicalRecord()) {
             if (medicalRecord.getFirstName().equals(person.getFirstName())
                     && medicalRecord.getLastName().equals(person.getLastName())) {
                 medicalRecordPerson = medicalRecord;
@@ -106,10 +106,10 @@ public class PersonMedicalRecordService {
      * @return a list of PersonsDTO objects that match the specified last name
      */
     public List<PersonsDTO> getPersonsDTOByLastName(String lastName) {
-        List<Person> listPersons = personService.getAllPersons();
+
         List<PersonsDTO> listPersonsDTOByLastName = new ArrayList<>();
 
-        for (Person person : listPersons) {
+        for (Person person : personService.getAllPersons()) {
 
             if (person.getLastName().equals(lastName)) {
                 PersonsDTO personsDTO = new PersonsDTO(person.getFirstName(), person.getLastName(), person.getPhone(),

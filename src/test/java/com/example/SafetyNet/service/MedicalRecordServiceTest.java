@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.example.safetynet.model.MedicalRecord;
@@ -14,7 +13,6 @@ import com.example.safetynet.repository.MedicalRecordRepository;
 
 class MedicalRecordServiceTest {
 
-    @InjectMocks
     MedicalRecordService medicalRecordService;
 
     @Mock
@@ -31,14 +29,13 @@ class MedicalRecordServiceTest {
         medicalRecords.add(medicalRecord01);
         medicalRecords.add(medicalRecord02);
 
-        when(medicalRecordRepository.findAll()).thenReturn(medicalRecords);
+        medicalRecordService = new MedicalRecordService(medicalRecordRepository, medicalRecords);
     }
 
     @Test
     void testGetAllMedicalRecord() {
         List<MedicalRecord> result = medicalRecordService.getAllMedicalRecord();
         assertEquals(2, result.size());
-        verify(medicalRecordRepository, times(1)).findAll();
     }
 
     @Test

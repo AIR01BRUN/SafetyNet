@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.example.safetynet.model.Firestation;
@@ -16,7 +15,6 @@ import com.example.safetynet.repository.FirestationRepository;
 
 class FirestationServiceTest {
 
-    @InjectMocks
     FirestationService firestationService;
 
     @Mock
@@ -33,7 +31,7 @@ class FirestationServiceTest {
         firestations.add(firestation01);
         firestations.add(firestation02);
 
-        when(firestationRepository.findAll()).thenReturn(firestations);
+        firestationService = new FirestationService(firestationRepository, firestations);
     }
 
     @Test
@@ -42,7 +40,6 @@ class FirestationServiceTest {
         List<Firestation> result = firestationService.getAllFirestation();
 
         assertEquals(2, result.size());
-        verify(firestationRepository, times(1)).findAll();
     }
 
     @Test

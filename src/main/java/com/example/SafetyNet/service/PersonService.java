@@ -1,10 +1,10 @@
 package com.example.safetynet.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.safetynet.model.Person;
@@ -24,9 +24,15 @@ public class PersonService {
     private final PersonRepositoty personRepository;
     private List<Person> listPersons;
 
+    @Autowired
     public PersonService(PersonRepositoty personRepository) {
         this.personRepository = personRepository;
         this.listPersons = personRepository.findAll();
+    }
+
+    public PersonService(PersonRepositoty personRepository, List<Person> list) {
+        this.personRepository = personRepository;
+        this.listPersons = list;
     }
 
     /**
@@ -35,7 +41,7 @@ public class PersonService {
      * @return a list of all persons.
      */
     public List<Person> getAllPersons() {
-        return personRepository.findAll();
+        return listPersons;
     }
 
     /**
